@@ -2,15 +2,11 @@
 import React from "react";
 
 export interface AppSettingsContextProps {
-  appTheme: string;
-  appDarkMode: boolean;
-  appGradientEnabled: boolean;
   appHeaderNone: boolean;
   appHeaderFixed: boolean;
   appHeaderInverse: boolean;
   appHeaderMegaMenu: boolean;
   appHeaderLanguageBar: boolean;
-  hasScroll: boolean;
 
   // setters / togglers
   handleSetAppHeaderNone: (value: boolean) => void;
@@ -27,7 +23,6 @@ export interface AppSettingsContextProps {
   appSidebarTransparent: boolean;
   appSidebarSearch: boolean;
   appSidebarFixed: boolean;
-  appSidebarGrid: boolean;
 
   handleSetAppSidebarNone: (value: boolean) => void;
   handleSetAppSidebarWide: (value: boolean) => void;
@@ -36,7 +31,6 @@ export interface AppSettingsContextProps {
   handleSetAppSidebarTransparent: (value: boolean) => void;
   handleSetAppSidebarSearch: (value: boolean) => void;
   handleSetAppSidebarFixed: (value: boolean) => void;
-  handleSetAppSidebarGrid: (value: boolean) => void;
 
   toggleAppSidebarMinify: (e: React.MouseEvent<HTMLAnchorElement | HTMLButtonElement>) => void;
   toggleAppSidebarMobile: (e: React.MouseEvent<HTMLAnchorElement | HTMLButtonElement>) => void;
@@ -53,20 +47,7 @@ export interface AppSettingsContextProps {
   toggleAppTopMenuMobile: (e: React.MouseEvent<HTMLAnchorElement | HTMLButtonElement>) => void;
   handleSetAppTopMenu: (value: boolean) => void;
 
-  appSidebarTwo: boolean;
-  handleSetAppSidebarTwo: (value: boolean) => void;
-
-  appSidebarEnd: boolean;
-  appSidebarEndToggled: boolean;
-  appSidebarEndMobileToggled: boolean;
-  toggleAppSidebarEnd: (e: React.MouseEvent<HTMLAnchorElement | HTMLButtonElement>) => void;
-  toggleAppSidebarEndMobile: (e: React.MouseEvent<HTMLAnchorElement | HTMLButtonElement>) => void;
-  handleSetAppSidebarEnd: (value: boolean) => void;
-
   handleSetAppBoxedLayout: (value: boolean) => void;
-  handleSetAppDarkMode: (value: boolean) => void;
-  handleSetAppGradientEnabled: (value: boolean) => void;
-  handleSetAppTheme: (value: string) => void;
 }
 
 export const AppSettings = React.createContext<AppSettingsContextProps | undefined>(undefined);

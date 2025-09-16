@@ -4,8 +4,8 @@ import { Link } from 'react-router-dom';
 function DropdownProfile() {
 	return (
 		<div className="navbar-item navbar-user dropdown">
-			<a href="#/" className="navbar-link dropdown-toggle d-flex align-items-center" data-bs-toggle="dropdown">
-				{/* <img src="/assets/img/user/user-13.jpg" alt="" />  */}
+			<a href="#/" className="navbar-link dropdown-toggle d-flex align-items-center text-white" data-bs-toggle="dropdown">
+				<img src="../assets/img/user.webp" alt="" /> 
 				<span>
 					<span className="d-none d-md-inline fw-bold">Adam Schwartz</span>
 					<b className="caret"></b>

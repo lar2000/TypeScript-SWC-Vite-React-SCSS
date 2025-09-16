@@ -1,11 +1,11 @@
 @import './default/styles.scss';
 
- @font-face {
-    font-family: 'NotoSerifLao';
-    src: url('../fonts/NotoSerifLao.ttf') format('truetype');
-    font-weight: normal;
-    font-style: normal;
-}
+//  @font-face {
+//     font-family: 'NotoSerifLao';
+//     src: url('../../public/assets/fonts/NotoSerifLao.ttf') format('truetype');
+//     font-weight: 350;
+//     font-style: normal;
+// }
 
 $prefix: 'bs-'; 
 .mailbox {
@@ -32,7 +32,9 @@ $prefix: 'bs-';
 
 /* react-quill */
 body {
-	font-family: 'NotoSerifLao', sans-serif !important;
+
+	// font-family: 'NotoSerifLao', sans-serif !important;
+	font-size: 14px;
 
 	& .ql-toolbar,
 	& .ql-container {

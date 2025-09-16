@@ -6,14 +6,14 @@ function ExtraError() {
   const context = useContext(AppSettings);
 
   useEffect(() => {
-    context.handleSetAppSidebarNone(true);
-    context.handleSetAppHeaderNone(true);
-    context.handleSetAppContentClass('p-0');
+    context?.handleSetAppSidebarNone(true);
+    context?.handleSetAppHeaderNone(true);
+    context?.handleSetAppContentClass('p-0');
 
     return () => {
-      context.handleSetAppSidebarNone(false);
-      context.handleSetAppHeaderNone(false);
-      context.handleSetAppContentClass('');
+      context?.handleSetAppSidebarNone(false);
+      context?.handleSetAppHeaderNone(false);
+      context?.handleSetAppContentClass('');
     };
 		
 		// eslint-disable-next-line

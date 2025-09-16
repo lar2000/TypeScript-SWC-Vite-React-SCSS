@@ -12,7 +12,7 @@ function Content() {
 			{(value) => {
 				const { appContentClass } = value as AppSettingsContextType;
 				return (
-					<div className={'app-content px-3 ' + appContentClass}>
+					<div className={'app-content px-3' + appContentClass}>
 						<Outlet />
 					</div>
 				);

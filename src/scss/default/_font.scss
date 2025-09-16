@@ -1,1 +1,11 @@
 @import url('https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700');
+
+ @font-face {
+    font-family: 'NotoSerifLao';
+    src: url('../../../public/assets/fonts/NotoSerifLao.ttf') format('truetype');
+    font-weight: 350;
+    font-style: normal;
+}
+body {
+    font-family: 'NotoSerifLao', sans-serif !important;
+}

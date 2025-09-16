@@ -4,7 +4,7 @@ function DropdownNotification() {
 	return (
 		<div className="navbar-item dropdown">
 			<a href="#/" data-bs-toggle="dropdown" className="navbar-link dropdown-toggle icon">
-				<i className="fa fa-bell"></i>
+				<i className="fa fa-bell text-white"></i>
 				<span className="badge">5</span>
 			</a>
 			<div className="dropdown-menu media-list dropdown-menu-end">
@@ -20,7 +20,7 @@ function DropdownNotification() {
 				</a>
 				<a href="#/" className="dropdown-item media">
 					<div className="media-left">
-						{/* <img src="/assets/img/user/user-1.jpg" className="media-object" alt="" /> */}
+						<img src="/assets/img/user/user-1.jpg" className="media-object" alt="" />
 						<i className="fab fa-facebook-messenger text-blue media-object-icon"></i>
 					</div>
 					<div className="media-body">

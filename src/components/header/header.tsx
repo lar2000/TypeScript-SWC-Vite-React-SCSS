@@ -9,7 +9,6 @@ import SearchForm from './search/form';
 import DropdownMegaMenu from './dropdown/mega';
 
 import logo from '../../../public/assets/img/profile.jpg';
-
 import { AppSettings } from '../../config/app-settings';
 
 function Header(): React.ReactElement {
@@ -21,46 +20,26 @@ function Header(): React.ReactElement {
 
   const {
     toggleAppSidebarMobile,
-    toggleAppSidebarEnd,
-    toggleAppSidebarEndMobile,
     toggleAppTopMenuMobile,
     appHeaderLanguageBar,
     appHeaderMegaMenu,
-    appHeaderInverse,
-    appSidebarTwo,
     appTopMenu,
     appSidebarNone,
   } = ctx;
 
   return (
-    <div
-      id="header"
-      className="app-header"
-      data-bs-theme={appHeaderInverse ? 'dark' : ''}
+    <div id="header" className="app-header shadow" style={{ background: '#2CADE2'}}
     >
       <div className="navbar-header">
-        {appSidebarTwo && (
-          <button
-            type="button"
-            className="navbar-mobile-toggler"
-            onClick={toggleAppSidebarEndMobile}
-          >
-            <span className="icon-bar"></span>
-            <span className="icon-bar"></span>
-            <span className="icon-bar"></span>
-          </button>
-        )}
-        <Link to="/" className="navbar-brand">
+        <Link to="/" className="navbar-brand text-white">
           <span>
-            <img src={logo} alt="logo" className="w-40px me-2" />
+            <img src={logo} alt="logo" className="w-40px h-30px rounded-pill me-2" />
           </span>
-          ໂຊກໄຊ ປະກັນຊີວິດ
+          ລະບົບ ປະກັນໄພ
         </Link>
 
         {appHeaderMegaMenu && (
-          <button
-            type="button"
-            className="navbar-mobile-toggler"
+          <button type="button" className="navbar-mobile-toggler"
             data-bs-toggle="collapse"
             data-bs-target="#top-navbar"
           >
@@ -71,9 +50,7 @@ function Header(): React.ReactElement {
           </button>
         )}
         {appTopMenu && !appSidebarNone && (
-          <button
-            type="button"
-            className="navbar-mobile-toggler"
+          <button type="button" className="navbar-mobile-toggler"
             onClick={toggleAppTopMenuMobile}
           >
             <span className="fa-stack fa-lg text-inverse">
@@ -83,9 +60,7 @@ function Header(): React.ReactElement {
           </button>
         )}
         {appSidebarNone && appTopMenu && (
-          <button
-            type="button"
-            className="navbar-mobile-toggler"
+          <button type="button" className="navbar-mobile-toggler"
             onClick={toggleAppTopMenuMobile}
           >
             <span className="icon-bar"></span>
@@ -94,9 +69,7 @@ function Header(): React.ReactElement {
           </button>
         )}
         {!appSidebarNone && (
-          <button
-            type="button"
-            className="navbar-mobile-toggler"
+          <button type="button" className="navbar-mobile-toggler"
             onClick={toggleAppSidebarMobile}
           >
             <span className="icon-bar"></span>
@@ -110,21 +83,11 @@ function Header(): React.ReactElement {
 
       <div className="navbar-nav">
         <SearchForm />
-        <DropdownNotification />
+        <DropdownNotification/>
 
         {appHeaderLanguageBar && <DropdownLanguage />}
 
         <DropdownProfile />
-
-        {appSidebarTwo && <div className="navbar-divider d-none d-md-block"></div>}
-
-        {appSidebarTwo && (
-          <div className="navbar-item d-none d-md-block">
-            <Link to="/" onClick={toggleAppSidebarEnd} className="navbar-link icon">
-              <i className="fa fa-th"></i>
-            </Link>
-          </div>
-        )}
       </div>
     </div>
   );

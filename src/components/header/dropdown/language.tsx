@@ -2,7 +2,7 @@
 function DropdownLanguage() {
 	return (
 		<div className="navbar-item dropdown">
-			<a href="#/" className="navbar-link dropdown-toggle" data-bs-toggle="dropdown">
+			<a href="#/" className="navbar-link dropdown-toggle text-white" data-bs-toggle="dropdown">
 				<span className="fi fi-us" title="us"></span>
 				<span className="d-none d-sm-inline ms-1">EN</span> <b className="caret"></b>
 			</a>

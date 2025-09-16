@@ -401,7 +401,7 @@
 					&.active {
 						& > .menu-link {
 							background: none;
-							color: var(--#{$prefix}app-sidebar-component-color);
+							color: #2CADE2;
 						}
 						&:after {
 							border-color: var(--#{$prefix}app-theme);
@@ -434,7 +434,7 @@
 					
 					@include gradient-enabled {
 						color: var(--#{$prefix}app-theme-color);
-						background-color: var(--#{$prefix}app-theme);
+						background-color: #2CADE2;
 						background-image: var(--#{$prefix}gradient);
 					}
 					
@@ -442,7 +442,7 @@
 						color: var(--#{$prefix}app-theme);
 						
 						@include gradient-enabled {
-							color: rgba($black, .65);
+							color: white;
 						}
 					}
 					& .menu-caret {

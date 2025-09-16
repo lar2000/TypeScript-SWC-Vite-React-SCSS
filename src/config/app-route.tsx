@@ -12,6 +12,14 @@ import EmailDetail from '../pages/email/email-detail';
 
 import Widgets from '../pages/widget/widget';
 
+// ===========Setting======================
+
+import Company from '../pages/setting/companies/ins-companies'
+import CarType from '../pages/setting/car/car-type';
+import Brand from '../pages/setting/car/brand';
+import INS_TYPE from '../pages/setting/insurances/ins_typeList';
+import OptionList from '../pages/setting/insurances/optionsList';
+
 import ExtraError from '../pages/extra/extra-error';
 
 const AppRoute: RouteObject[] = [
@@ -46,6 +54,20 @@ const AppRoute: RouteObject[] = [
         path: 'widgets',
         element: <Widgets />,
       },
+       {
+        path: 'setting/*',
+        element: <Outlet />,
+        children: [
+          { path: 'companies', element: <Company/> },
+          { path: 'ins_type', element: <INS_TYPE/> },
+          { path: 'car_type', element: <CarType/> },
+          { path: 'brand', element: <Brand /> },
+          { path: 'option/:id', element: <OptionList/> },
+          { path: '*', element: <ExtraError /> },
+        ],
+      },
+
+
       { path: '*', element: <ExtraError /> },
     ],
   },

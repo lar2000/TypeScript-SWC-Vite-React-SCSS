@@ -159,20 +159,18 @@ function Sidebar(): React.ReactElement {
               ? 'auto'
               : sidebarX;
 
-          const darkMode = sidebar.getAttribute('data-bs-theme') === 'dark';
           const windowHeight = document.body.clientHeight;
 
           if (!document.querySelector('#app-sidebar-float-submenu')) {
             const overflowClass = targetHeight > windowHeight ? 'overflow-scroll mh-100vh' : '';
             const html = document.createElement('div');
-            if (darkMode) html.setAttribute('data-bs-theme', 'dark');
             html.setAttribute('id', 'app-sidebar-float-submenu');
             html.setAttribute('class', 'app-sidebar-float-submenu-container');
             html.setAttribute('data-offset-left', String(targetLeft));
             html.setAttribute('data-menu-offset-left', String(targetLeft));
-			html.setAttribute('data-offset-top', String(targetTop));
+			      html.setAttribute('data-offset-top', String(targetTop));
             html.setAttribute('data-menu-offset-top', String(targetTop));
-			html.setAttribute('data-offset-right', String(targetRight));
+			      html.setAttribute('data-offset-right', String(targetRight));
             html.setAttribute('data-menu-offset-right', String(targetRight));
             html.innerHTML = `
               <div class="app-sidebar-float-submenu-arrow" id="app-sidebar-float-submenu-arrow"></div>
@@ -221,25 +219,22 @@ function Sidebar(): React.ReactElement {
         //   toggleAppSidebarMinify,
           toggleAppSidebarMobile,
           appSidebarTransparent,
-          appSidebarGrid,
           appSidebarLight,
         } = ctx as {
           toggleAppSidebarMinify?: (e: React.MouseEvent<HTMLAnchorElement>) => void;
           toggleAppSidebarMobile?: (e: React.MouseEvent<HTMLAnchorElement>) => void;
           appSidebarTransparent?: boolean;
-          appSidebarGrid?: boolean;
           appSidebarLight?: boolean;
         };
 
         return (
           <>
-            <div id="sidebar" className={ 'app-sidebar ' +
-                (appSidebarTransparent ? 'app-sidebar-transparent ' : '') +
-                (appSidebarGrid ? 'app-sidebar-grid ' : '')
+            <div id="sidebar" className={ 'app-sidebar shadow-lg' +
+                (appSidebarTransparent ? 'app-sidebar-transparent ' : '')
               }
               data-bs-theme={appSidebarLight ? '' : 'light'}
             >
-              <PerfectScrollbar className="app-sidebar-content" options={{ suppressScrollX: true }}
+              <PerfectScrollbar className="app-sidebar-content " options={{ suppressScrollX: true }}
               >
                 {!context?.appSidebarSearch && <SidebarProfile />}
                 <SidebarNav />
@@ -248,7 +243,7 @@ function Sidebar(): React.ReactElement {
             </div>
             <div className="app-sidebar-bg" data-bs-theme={appSidebarLight ? '' : 'light'}
             ></div>
-            <div className="app-sidebar-mobile-backdrop">
+            <div className="app-sidebar-mobile-backdrop ">
               <Link to="/" onClick={toggleAppSidebarMobile}
                 className="stretched-link"
               ></Link>

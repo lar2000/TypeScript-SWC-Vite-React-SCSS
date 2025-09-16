@@ -10,14 +10,10 @@ function SidebarMinifyBtn(): React.ReactElement {
 
         const {
           toggleAppSidebarMinify,
-        //   toggleAppSidebarMobile,
-        //   appSidebarTransparent,
-        //   appSidebarGrid,
         } = ctx as {
           toggleAppSidebarMinify?: (e: React.MouseEvent<HTMLAnchorElement>) => void;
           toggleAppSidebarMobile?: (e: React.MouseEvent<HTMLAnchorElement>) => void;
           appSidebarTransparent?: boolean;
-          appSidebarGrid?: boolean;
         };
 
         return (
