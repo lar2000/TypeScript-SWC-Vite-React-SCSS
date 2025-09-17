@@ -20,15 +20,10 @@ function CarType(): React.ReactElement {
   const [currentPage, setCurrentPage] = useState<number>(1);
   const [length, setLength] = useState<number>(30); // items per page
   const [searchTerm, setSearchTerm] = useState<string>("");
-
-  const [inputs, setInputs] = useState<CarItem>({
-    id: "",
-    car_type_name_la: "",
-    car_type_name_en: "",
-  });
+  const [getData, setData] = useState<CarItem>();
+  const [response, setResponse] = useState<CarItem | null>(null)
 
   const [open, setOpen] = useState<boolean>(false);
-  const handleOpen = () => setOpen(true);
 
   const handleTableHeight = (): void => {
     const table = document.getElementById("table");
@@ -60,7 +55,7 @@ function CarType(): React.ReactElement {
 
     // cleanup on unmount
     return () => clearTimeout(timer);
-  }, []);
+  }, [response]);
 
   // Mock data
   const mockData: CarItem[] = Array.from({ length: 50 }, (_, i) => ({
@@ -69,16 +64,21 @@ function CarType(): React.ReactElement {
     car_type_name_en: `English_name ${i + 1}`,
   }));
 
-  const handleEdit = (item: CarItem): void => {
-    setInputs({ ...item });
-    handleOpen();
+  const handleAdd = () => {
+    setData(undefined);
+    setOpen(true)
   };
+
+  const handleEdit = (item: CarItem): void => {
+    setData(item);
+    setOpen(true);
+  };
+
   const handleDelete = (id: number | string | undefined): void => {
     console.log(id);
   };
 
-  const filteredData = mockData.filter(
-    (item) =>
+  const filteredData = mockData.filter( (item) =>
       item.car_type_name_la.toLowerCase().includes(searchTerm.toLowerCase()) ||
       item.car_type_name_en.toLowerCase().includes(searchTerm.toLowerCase())
   );
@@ -97,7 +97,7 @@ function CarType(): React.ReactElement {
           Table Car type List
         </li>
         <li className="breadcrumb-item">
-          <a href="#" className="text-green" onClick={handleOpen}>
+          <a href="#" className="text-green" onClick={handleAdd}>
             <i className="fas fa-circle-plus me-1"></i>ເພີ່ມຂໍ້ມູນ
           </a>
         </li>
@@ -214,9 +214,9 @@ function CarType(): React.ReactElement {
       {/* ---------------- Modal ---------------- */}
       <FormModal
         open={open}
-        setOpen={setOpen}
-        inputs={inputs}
-        setInputs={setInputs}
+        setOpen={() => setOpen(false)}
+        data={getData}
+        response={setResponse}
       />
     </div>
   );

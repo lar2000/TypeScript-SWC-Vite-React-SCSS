@@ -1,5 +1,5 @@
 import React, { useEffect, useContext, useState } from "react";
-import { useParams, Link, useNavigate } from "react-router-dom";
+import { Link, useNavigate} from "react-router-dom";
 import { AppSettings } from "../../../config/app-settings";
 import Pagination from "../../../utils/pagination";
 import FormModal from "./Form-Car/brand-form";
@@ -24,16 +24,12 @@ function Brand(): React.ReactElement {
   const context = useContext(AppSettings);
   const navigate = useNavigate();
 
-  const { id } = useParams<{ id: string }>();
-  const ids: string | number = isNaN(Number(id!)) ? id! : Number(id!);
-
   const [isLoading, setLoading] = useState(false);
   const [currentPage, setCurrentPage] = useState<number>(1);
   const [length, setLength] = useState<number>(30); // items per page
   const [searchTerm, setSearchTerm] = useState<string>("");
 
   const [open, setOpen] = useState<boolean>(false);
-  const handleOpen = () => setOpen(true);
 
   const handleTableHeight = (): void => {
     const table = document.getElementById("table");
@@ -57,23 +53,21 @@ function Brand(): React.ReactElement {
   }, []);
 
   // Mock data
-  const mockData: BrandItems[] = Array.from({ length: 5 }, (_, idx) => {
-    const car_type_fk = ids;
-
-    // random 2–5 records per car_type_fk
-    const recordsCount = Math.floor(Math.random() * 4) + 2;
-
-    return Array.from({ length: recordsCount }, () => ({
-      car_type_fk,
-      id: idx++,
-      brand_name: `TOYOTA ${idx + 1}`,
-      car_type_name_la: `ປະເພດລົດ ${idx + 1}`,
-      car_type_name_en: `English_name ${idx + 1}`,
+  const mockData: BrandItems[] = Array.from({ length: 50 }, (_, i) => ({
+      car_type_fk: i +'001',
+      id: i+1,
+      brand_name: `TOYOTA ${i + 1}`,
+      car_type_name_la: `ປະເພດລົດ ${i + 1}`,
+      car_type_name_en: `English_name ${i + 1}`,
     }));
-  }).flat();
+
+  const handleAdd = () => {
+    setData(undefined);    // clear parent data
+    setOpen(true);    // open modal
+  };
 
   const handleEdit = (item: BrandItems): void => {
-    setData({ ...item, car_type_fk: ids });
+    setData(item);
     setOpen(true);
     console.log(item);
   };
@@ -116,7 +110,7 @@ function Brand(): React.ReactElement {
           Table Brand List
         </li>
         <li className="breadcrumb-item">
-          <a href="#" className="text-green" onClick={handleOpen}>
+          <a href="#" className="text-green" onClick={handleAdd}>
             <i className="fas fa-circle-plus me-1"></i>ເພີ່ມຂໍ້ມູນ
           </a>
         </li>
@@ -227,15 +221,12 @@ function Brand(): React.ReactElement {
       </div>
 
       {/* ---------------- Modal ---------------- */}
-      {open && (
         <FormModal
           open={open}
           setOpen={() => setOpen(false)}
           data={data}
           response={setResponse}
-          id={ids}
         />
-      )}
     </div>
   );
 }

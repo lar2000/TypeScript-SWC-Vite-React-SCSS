@@ -26,7 +26,6 @@ function OptionList(): React.ReactElement {
   const [searchTerm, setSearchTerm] = useState<string>("");
 
   const [open, setOpen] = useState<boolean>(false);
-  const handleOpen = () => setOpen(true);
 
   const handleTableHeight = (): void => {
     const table = document.getElementById("table");
@@ -58,15 +57,20 @@ function OptionList(): React.ReactElement {
 
     return Array.from({ length: recordsCount }, () => ({
       ins_type_fk,
-      id: idx++,
-      option_name_la: `ທາງເລຶອກ ${idx + 1}`,
-      option_name_en: `English_name ${idx + 1}`,
+      id: (idx++) + 1,
+      option_name_la: `ທາງເລຶອກ ${idx}`,
+      option_name_en: `English_name ${idx}`,
       option_tax: Math.random() > 0.5 ? "10%" : "ຍົກເວັ້ນອາກອນ",
     }));
   }).flat();
 
+  const handleAdd = () => {
+    setData(undefined);
+    setOpen(true)
+  };
+
   const handleEdit = (item: OptionItems): void => {
-    setData({ ...item, ins_type_fk: ids });
+    setData(item);
     setOpen(true);
     console.log(item);
   };
@@ -109,7 +113,7 @@ function OptionList(): React.ReactElement {
         </li>
         <li className="breadcrumb-item text-blue">Table Options List</li>
         <li className="breadcrumb-item">
-          <a href="#" className="text-green" onClick={handleOpen}>
+          <a href="#" className="text-green" onClick={handleAdd}>
             <i className="fas fa-circle-plus me-1"></i>ເພີ່ມຂໍ້ມູນ
           </a>
         </li>

@@ -1,20 +1,26 @@
 import React, { useEffect, useContext, useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
-import { AppSettings } from "../../../config/app-settings";
-import Pagination from "../../../utils/pagination";
-import FormModal from "./ins-Form/ins_Form";
+import { Link, useNavigate } from 'react-router-dom'
+import { AppSettings } from "./../../config/app-settings";
+import Pagination from "./../../utils/pagination";
+import FormModal from "./form/agentForm";
 import { InputGroup, Input, Loader, Placeholder } from "rsuite";
 // ----------------- Types -----------------
-interface InsTypeItems {
+interface AgentItem {
   id?: number | string;
-  ins_type_name_la: string;
-  ins_type_name_en: string;
-  ins_status: string;
-  optionsIndex?: number;
+  agent_code: string;
+  fullname: string;
+  birthday: string;
+  card_id: string;
+  tel: string;
+  district: string
+  province: string
+  village: string;
+  agent_status: string;
+  contract: string
 }
 
 // ----------------- Component -----------------
-function CarType(): React.ReactElement {
+function Agent(): React.ReactElement {
   const context = useContext(AppSettings);
   const navigate = useNavigate();
 
@@ -22,10 +28,10 @@ function CarType(): React.ReactElement {
   const [currentPage, setCurrentPage] = useState<number>(1);
   const [length, setLength] = useState<number>(30); // items per page
   const [searchTerm, setSearchTerm] = useState<string>("");
+  const [getData, setData] = useState<AgentItem>();
+  const [response, setResponse] = useState<AgentItem | null>(null)
 
   const [open, setOpen] = useState<boolean>(false);
-  const [getData, setData] = useState<InsTypeItems>();
-  const [response, setResponse] = useState<InsTypeItems | null>(null)
 
   const handleTableHeight = (): void => {
     const table = document.getElementById("table");
@@ -60,52 +66,53 @@ function CarType(): React.ReactElement {
   }, [response]);
 
   // Mock data
-  const mockData: InsTypeItems[] = Array.from({ length: 50 }, (_, i) => ({
+  const mockData: AgentItem[] = Array.from({ length: 50 }, (_, i) => ({
     id: i + 1,
-    ins_type_name_la: `ປະເພດປະກັນ ${i + 1}`,
-    ins_type_name_en: `Insurance_name ${i + 1}`,
-    ins_status: "Normal or carIns",
-    optionsIndex: Math.floor(Math.random() * 12) + 1,
+    agent_code: 'A-202500'+ i,
+    fullname: `agent-people `+ (i+1),
+    birthday: new Date().toLocaleDateString("en-GB").replace(/\//g, "-"),
+    card_id: '123-3432-324',
+    tel: `911201`+i,
+    district: 'ເມຶອງ...' + i,
+    province: 'ແຂວງ...' + i,
+    village: 'ບ້ານ.......',
+    agent_status: '0',
+    contract: '122'+i
   }));
-
-  const handleOption = (id: number | string | undefined): void => {
-    if (!id) return;
-    navigate(`/setting/option/${id}`, { state: { id } });
-  };
 
   const handleAdd = () => {
     setData(undefined);
+    setOpen(true)
+  };
+
+  const handleEdit = (item: AgentItem): void => {
+    setData(item);
     setOpen(true);
   };
 
-  const handleEdit = (item: InsTypeItems): void => {
-    setData(item);
-    setOpen(true)
-  };
-  
   const handleDelete = (id: number | string | undefined): void => {
     console.log(id);
   };
 
-  const filteredData = mockData.filter(
-    (item) =>
-      item.ins_type_name_la.toLowerCase().includes(searchTerm.toLowerCase()) ||
-      item.ins_type_name_en.toLowerCase().includes(searchTerm.toLowerCase()) ||
-      item.ins_status.toLowerCase().includes(searchTerm.toLowerCase())
+  const filteredData = mockData.filter( (item) =>
+      item.fullname.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      item.card_id.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      item.tel.toLowerCase().includes(searchTerm.toLowerCase())
   );
 
   const startIndex = (currentPage - 1) * length;
   const endIndex = startIndex + length;
   const currentData = filteredData.slice(startIndex, endIndex);
+  const columns = ['ລຳດັບ', 'ລະຫັດ', 'ຊື່ ແລະ ນາມສະກຸນ', 'ວດປ ເກີດ', 'ເບີໂທລະສັບ', 'ທີຢູ່', 'ສັນຍາ', 'ຈັດການ' ]
 
   return (
     <div className="h-100 py-0 my-0">
-      <ol className="breadcrumb float-sm-end mt-lg-2 me-lg-4">
+       <ol className="breadcrumb float-sm-end mt-lg-2 me-lg-4">
         <li className="breadcrumb-item">
           <Link to={"/dashboard/v1"}>Home</Link>
         </li>
         <li className="breadcrumb-item text-blue">
-          Table Inssurances type List
+          Table Agent List
         </li>
         <li className="breadcrumb-item">
           <a href="#" className="text-green" onClick={handleAdd}>
@@ -113,7 +120,7 @@ function CarType(): React.ReactElement {
           </a>
         </li>
       </ol>
-      <h1 className="page-header pt-lg-3 mb-0">ປະເພດປະກັນ</h1>
+      <h1 className="page-header pt-lg-3 mb-0">ລາຍການອັດຕາແລກປ່ຽນ</h1>
       <div className=" row w-100">
         <div className="col-lg-8 col-sm-4 d-sm-flex d-none align-items-center">
           <button onClick={() => navigate(-1)} className="btn btn-danger btn-icon btn-md">
@@ -122,7 +129,7 @@ function CarType(): React.ReactElement {
         </div>
         <div className="col-lg-4 col-sm-8 mb-2">
           <InputGroup className="border">
-            <Input className="fw-medium" placeholder="ຄົ້ນຫາປະເພດປະກັນ..."
+            <Input className="fw-medium" placeholder="ຄົ້ນຫາອັດຕາແລກປ່ຽນ..."
               value={searchTerm}
               onChange={(value: string) => setSearchTerm(value)}
             />
@@ -140,18 +147,19 @@ function CarType(): React.ReactElement {
           >
             <thead>
               <tr className=" fw-normal">
-                <th className="text-center w-10px">ລຳດັບ</th>
-                <th>ປະເພດປະກັນ(ລາວ)</th>
-                <th>ປະເພດປະກັນ(ອັງກິດ)</th>
-                <th>ສະຖານະ</th>
-                <th>ທາງເລຶອກ</th>
-                <th className="text-center w-100px">ຈັດການ</th>
+                {columns.map((col) =>(
+                    <th>{col}</th>
+                ))}
               </tr>
             </thead>
             {isLoading ? (
               <tr>
-                <td colSpan={6}>
-                  <Placeholder.Grid active rows={15} columns={6} className="my-4"
+                <td colSpan={columns.length}>
+                  <Placeholder.Grid
+                    active
+                    rows={15}
+                    columns={columns.length}
+                    className="my-4"
                   />
                   <Loader center size="lg" content="loading" />
                 </td>
@@ -162,33 +170,20 @@ function CarType(): React.ReactElement {
                   {currentData.map((item, index) => (
                     <tr key={item.id} className=" fw-bold">
                       <td className="text-end">{index + 1}</td>
-                      <td>{item.ins_type_name_la}</td>
-                      <td>{item.ins_type_name_en}</td>
-                      <td>{item.ins_status}</td>
-                      <td className="fs-5">
-                        <span className="btn btn-primary btn-xs w-30px me-3">
-                          {item.optionsIndex}
-                        </span>
-                        <span className="">
-                          <button
-                            type="button"
-                            className="btn btn-success btn-xs fw-medium"
-                            onClick={() => handleOption(item.id)}
-                          >
-                            <i className="fas fa-angles-right me-2"></i>
-                            ເພີ່ມທາງເລຶອກ
-                          </button>
-                        </span>
-                      </td>
+                      <td>{item.agent_code}</td>
+                      <td>{item.fullname}</td>
+                      <td>{item.birthday}</td>
+                      <td className="text-center">{item.tel}</td>
+                      <td>
+                        {item.village}, {item.district}, {item.province}</td>
+                        <td>{item.contract} ສັນຍາ</td>
                       <td className="text-center">
-                        <button
-                          className="btn btn-cyan btn-xs px-1 me-1"
+                        <button className="btn btn-cyan btn-xs px-1 me-1"
                           onClick={() => handleEdit(item)}
                         >
                           <i className="fa fa-pen-to-square fa-fw"></i>
                         </button>
-                        <button
-                          className="btn btn-danger btn-xs px-1"
+                        <button className="btn btn-danger btn-xs px-1"
                           onClick={() => handleDelete(item.id)}
                         >
                           <i className="fa fa-trash fa-fw"></i>
@@ -199,7 +194,7 @@ function CarType(): React.ReactElement {
                 </tbody>
                 <tfoot>
                   <tr>
-                    <td colSpan={6}>
+                    <td colSpan={columns.length}>
                       <div className="d-lg-flex align-items-center mx-2 my-n2">
                         <div className="d-lg-flex d-none align-items-center text-nowrap">
                           <select
@@ -247,4 +242,4 @@ function CarType(): React.ReactElement {
   );
 }
 
-export default CarType;
+export default Agent;

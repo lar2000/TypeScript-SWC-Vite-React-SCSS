@@ -1,4 +1,4 @@
-import { useRef, useState } from "react";
+import { useRef, useState, useEffect } from "react";
 import { Modal, Input, Button, Form, Loader, SelectPicker } from "rsuite";
 import type { FormInstance } from "rsuite";
 import { InputField } from '../../../../utils/inputFields'
@@ -12,10 +12,9 @@ interface BrandItems {
 
 interface CarModalProps {
   open: boolean;
-  setOpen:()=>void;
+  setOpen:() => void;
   data?: BrandItems;
   response: (data: BrandItems) => void
-  id: string | number
 }
 
 const B_model = createModel<BrandItems>({
@@ -23,16 +22,25 @@ const B_model = createModel<BrandItems>({
   brand_name: requiredField("⚠️ ກະລຸນາປ້ອນ...", 'string'),
 });
 
-export default function ModalForm({ open, setOpen, data, response,id }: CarModalProps) {
+export default function ModalForm({ open, setOpen, data, response }: CarModalProps) {
 
       const [inputs, setInputs] = useState<BrandItems>({
-        car_type_fk: id,
+        car_type_fk: '',
         brand_name: "",
       });
 
     const [isLoading, setLoading] = useState(false);
 
-  
+    useEffect(() => {
+      if (open) {
+        if (data && data.id) {
+          setInputs(data);
+        } else {
+          setInputs({ car_type_fk: '', brand_name: '' });
+        }
+      }
+    }, [open, data]);
+
     const formRef = useRef<FormInstance>(null);
     const handleSubmit = () => {
         if (!formRef.current?.check()) {
@@ -55,14 +63,14 @@ export default function ModalForm({ open, setOpen, data, response,id }: CarModal
     ]
     
   return (
-    <Modal open={open} onClose={setOpen} size="xs">
+    <Modal open={open} onClose={() =>setOpen()} size="xs">
       <Modal.Header>
         <Modal.Title className="py-1 text-center">
           {data?.id ? "ແກ້ໄຂຍີ່ຫໍ້ລົດ" : "ເພີ່ມຍີ່ຫໍ້ລົດ"}
         </Modal.Title>
       </Modal.Header>
       <Modal.Body>
-        <Form fluid ref={formRef} model={B_model} formValue={data}
+        <Form fluid ref={formRef} model={B_model} formValue={inputs}
         onSubmit={handleSubmit} onChange={(val) => setInputs(val as BrandItems)} >
           <Form.Group className="mb-3">
             <InputField name="car_type_fk" label="ປະເພດລົດ" data={carTypes}
@@ -77,7 +85,7 @@ export default function ModalForm({ open, setOpen, data, response,id }: CarModal
                 <Loader size="xs" content='ກຳລັງບັນທຶກ'/>
             ): 'ບັນທຶກ'}
         </Button>
-        <Button onClick={setOpen} appearance="subtle">
+        <Button onClick={() => setOpen()} color="red" appearance="primary">
           ຍົກເລີກ
         </Button>
       </Modal.Footer>

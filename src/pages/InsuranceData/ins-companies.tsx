@@ -1,8 +1,8 @@
 import React, { useEffect, useContext, useState } from "react";
 import { useParams, Link, useNavigate } from "react-router-dom";
-import { AppSettings } from "../../../config/app-settings";
-import Pagination from "../../../utils/pagination";
-import FormModal from "./ins-comForm";
+import { AppSettings } from "../../config/app-settings";
+import Pagination from "../../utils/pagination";
+import FormModal from "./form/ins-comForm";
 import { InputGroup, Input, Loader, Placeholder, Text } from "rsuite";
 // ----------------- Types -----------------
 interface CompanyItem {
@@ -30,8 +30,7 @@ function InsCompanies(): React.ReactElement {
   const [searchTerm, setSearchTerm] = useState<string>("");
 
   const [open, setOpen] = useState<boolean>(false);
-  const handleOpen = () => setOpen(true);
-
+  
   const handleTableHeight = (): void => {
     const table = document.getElementById("table");
     if (table) {
@@ -65,6 +64,10 @@ function InsCompanies(): React.ReactElement {
     address_en: 'Thatlouang village, Xaysetha district, vianetiane capital'
   }));
 
+  const handleAdd = () => {
+    setData(undefined);
+    setOpen(true);
+  }
   const handleEdit = (item: CompanyItem): void => {
     setData(item);
     setOpen(true);
@@ -108,10 +111,10 @@ function InsCompanies(): React.ReactElement {
           <Link to={"/dashboard/v1"}>Home</Link>
         </li>
         <li className="breadcrumb-item text-blue">
-          Table Insurances compaies List
+          Table compaies List
         </li>
         <li className="breadcrumb-item">
-          <a href="#" className="text-green" onClick={handleOpen}>
+          <a href="#" className="text-green" onClick={handleAdd}>
             <i className="fas fa-circle-plus me-1"></i>ເພີ່ມຂໍ້ມູນ
           </a>
         </li>
@@ -136,7 +139,7 @@ function InsCompanies(): React.ReactElement {
         </div>
       </div>
       <div className="panel rounded-2 shadow-lg">
-        <div className="table-responsive mt-2 mx-1">
+        <div className="table-responsive mt-2 mx-1" id="table">
           <table
             className="table table-thead-sticky table-tfoot-sticky table-bordered mb-0
              align-middle table-px-10px table-py-6px table-hover table-sm table-striped text-nowrap fs-5"
@@ -148,8 +151,8 @@ function InsCompanies(): React.ReactElement {
             </thead>
             {isLoading ? (
               <tr>
-                <td colSpan={4}>
-                  <Placeholder.Grid active rows={15} columns={3} className="my-4"
+                <td colSpan={columns.length}>
+                  <Placeholder.Grid active rows={15} columns={6} className="my-4"
                   />
                   <Loader center size="lg" content="loading" />
                 </td>
@@ -227,7 +230,6 @@ function InsCompanies(): React.ReactElement {
       </div>
 
       {/* ---------------- Modal ---------------- */}
-      {open && (
         <FormModal
           open={open}
           setOpen={() => setOpen(false)}
@@ -235,7 +237,6 @@ function InsCompanies(): React.ReactElement {
           response={setResponse}
           id={ids}
         />
-      )}
     </div>
   );
 }

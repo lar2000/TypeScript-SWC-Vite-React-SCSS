@@ -1,4 +1,4 @@
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { Modal, Input, Button, Form, Loader } from "rsuite";
 import type { FormInstance } from "rsuite";
 import { InputField } from '../../../utils/inputFields'
@@ -17,7 +17,7 @@ interface CompanyItem {
 
 interface CompProp {
   open: boolean;
-  setOpen:()=>void;
+  setOpen: () => void;
   data?: CompanyItem;
   response: (data: CompanyItem) => void
   id: string | number
@@ -47,6 +47,24 @@ export default function ModalForm({ open, setOpen, data, response }: CompProp) {
 
     const [isLoading, setLoading] = useState(false);
 
+    useEffect(() => {
+      if(open) {
+        if (data && data.id) {
+          setInputs(data);
+        } else {
+          setInputs({
+            logo_path: '',
+            com_name_la: "",
+            com_name_en: "",
+            tel: "",
+            email: "",
+            address_la: "",
+            address_en: "",
+          })
+        }
+      }
+    },[open, data])
+
     const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         
         const file = e.target.files?.[0];
@@ -73,21 +91,21 @@ export default function ModalForm({ open, setOpen, data, response }: CompProp) {
     };
 
   return (
-    <Modal open={open} onClose={setOpen} size="md">
+    <Modal open={open} onClose={() => setOpen()} size="md">
       <Modal.Header>
         <Modal.Title className="py-1 text-center">
           {data?.id ? "ແກ້ໄຂບໍລິສັດປະກັນໄພ" : "ເພີ່ມບໍລິສັດປະກັນໄພ"}
         </Modal.Title>
       </Modal.Header>
       <Modal.Body className="mb-2">
-        <Form fluid ref={formRef} model={C_model} formValue={data}
+        <Form fluid ref={formRef} model={C_model} formValue={inputs}
         onSubmit={handleSubmit} onChange={(val) => setInputs(val as CompanyItem)} >
             <div className="d-flex flex-column justify-content-center align-items-center">
                 <label htmlFor="fileInput"
                 className="d-flex justify-content-center align-items-center cursor-pointer w-150px mb-2"
                 >
-                    {data?.logo_path ? (
-                        <img src={data?.logo_path} alt="logo preview" className="dropzone cover rounded-4 mb-1" 
+                    {inputs.logo_path || data?.logo_path ? (
+                        <img src={inputs.logo_path || data?.logo_path} alt="logo preview" className="dropzone cover rounded-4 mb-1" 
                         style={{ width: '150px', height: '130px'}}/>
                     ) : (
                         <i className="far fa-image text-cyan-300 fa-10x"></i>
@@ -119,7 +137,7 @@ export default function ModalForm({ open, setOpen, data, response }: CompProp) {
                 <Loader size="xs" content='ກຳລັງບັນທຶກ'/>
             ): 'ບັນທຶກ'}
         </Button>
-        <Button onClick={setOpen} appearance="subtle">
+        <Button onClick={() => setOpen()} color="red" appearance="primary">
           ຍົກເລີກ
         </Button>
       </Modal.Footer>

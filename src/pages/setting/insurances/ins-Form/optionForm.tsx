@@ -1,4 +1,4 @@
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { Modal, Input, Button, Form, Loader, SelectPicker } from "rsuite";
 import type { FormInstance } from "rsuite";
 import { InputField } from '../../../../utils/inputFields'
@@ -32,18 +32,31 @@ const status=[
     {value: '2', label: 'ຍົກເວັ້ນອາກອນ'}
 ]
 
-export default function ModalForm({ open, setOpen, data, response,id }: CarModalProps) {
+export default function ModalForm({ open, setOpen, data, response, id }: CarModalProps) {
 
-      const [inputs, setInputs] = useState<OptionItems>({
+    const [isLoading, setLoading] = useState(false);
+    const [inputs, setInputs] = useState<OptionItems>({
         ins_type_fk: id,
         option_name_la: "",
         option_name_en: "",
         option_tax: "",
-      });
-
-    const [isLoading, setLoading] = useState(false);
-
+    });
   
+    useEffect(()=> {
+      if(open) {
+        if (data && data.id) {
+          setInputs(data);
+        } else {
+          setInputs({
+            ins_type_fk: '',
+            option_name_la: "",
+            option_name_en: "",
+            option_tax: "",
+          })
+        }
+      }
+    }, [open, data]);
+
     const formRef = useRef<FormInstance>(null);
     const handleSubmit = () => {
         if (!formRef.current?.check()) {
@@ -65,7 +78,7 @@ export default function ModalForm({ open, setOpen, data, response,id }: CarModal
         </Modal.Title>
       </Modal.Header>
       <Modal.Body>
-        <Form fluid ref={formRef} model={C_Type_model} formValue={data}
+        <Form fluid ref={formRef} model={C_Type_model} formValue={inputs}
         onSubmit={handleSubmit} onChange={(val) => setInputs(val as OptionItems)} >
           <Form.Group className="mb-3">
             <InputField name="option_name_la" label="ທາງເລຶອກ(ລາວ)" accepter={Input} />

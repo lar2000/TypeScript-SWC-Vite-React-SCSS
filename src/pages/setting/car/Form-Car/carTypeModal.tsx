@@ -1,4 +1,4 @@
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { Modal, Input, Button, Form, Loader } from "rsuite";
 import type { FormInstance } from "rsuite";
 import { InputField } from '../../../../utils/inputFields'
@@ -12,9 +12,9 @@ interface CarItem {
 
 interface CarModalProps {
   open: boolean;
-  setOpen: React.Dispatch<React.SetStateAction<boolean>>;
-  inputs: CarItem;
-  setInputs: React.Dispatch<React.SetStateAction<CarItem>>;
+  setOpen: () => void;
+  data?: CarItem;
+  response: (data: CarItem) => void
 }
 
 const C_Type_model = createModel<CarItem>({
@@ -22,31 +22,43 @@ const C_Type_model = createModel<CarItem>({
   car_type_name_en: requiredField("⚠️ ກະລຸນາປ້ອນ...", 'string'),
 });
 
-export default function ModalForm({ open, setOpen, inputs, setInputs }: CarModalProps) {
+export default function ModalForm({ open, setOpen, data, response }: CarModalProps) {
 
     const [isLoading, setLoading] = useState(false);
+    const [inputs, setInputs] = useState<CarItem>({
+        id: "",
+        car_type_name_la: "",
+        car_type_name_en: "",
+      });
 
-    const handleClose = () => {
-        setInputs({} as CarItem);
-        setOpen(false);
-    };
+      useEffect(() => {
+        if(open) {
+          if(data && data.id) {
+            setInputs(data);
+          } else {
+            setInputs({
+              car_type_name_la: '',
+              car_type_name_en: '',
+            })
+          }
+        }
+      },[open, data])
 
     const formRef = useRef<FormInstance>(null);
     const handleSubmit = () => {
         if (!formRef.current?.check()) {
-        return; // ❌ validation failed
+        return;
         }
         setLoading(true);
         console.log("inputs: ", inputs);
-        // ✅ do save
+        response(inputs)
         setTimeout(()=> {
             setLoading(false)
-            handleClose();
         }, 2000)
     };
     
   return (
-    <Modal open={open} onClose={handleClose} size="xs">
+    <Modal open={open} onClose={() => setOpen()} size="xs">
       <Modal.Header>
         <Modal.Title className="py-1 text-center">
           {inputs.id ? "ແກ້ໄຂປະເພດລົດ" : "ເພີ່ມປະເພດລົດ"}
@@ -69,7 +81,7 @@ export default function ModalForm({ open, setOpen, inputs, setInputs }: CarModal
                 <Loader size="xs" content='ກຳລັງບັນທຶກ'/>
             ): 'ບັນທຶກ'}
         </Button>
-        <Button onClick={handleClose} appearance="subtle">
+        <Button onClick={() => setOpen()} color="red" appearance="primary">
           ຍົກເລີກ
         </Button>
       </Modal.Footer>

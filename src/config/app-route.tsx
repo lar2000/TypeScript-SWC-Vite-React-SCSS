@@ -14,13 +14,16 @@ import Widgets from '../pages/widget/widget';
 
 // ===========Setting======================
 
-import Company from '../pages/setting/companies/ins-companies'
+import Company from '../pages/InsuranceData/ins-companies';
+import Agent from '../pages/InsuranceData/agent';
+
 import CarType from '../pages/setting/car/car-type';
 import Brand from '../pages/setting/car/brand';
 import INS_TYPE from '../pages/setting/insurances/ins_typeList';
 import OptionList from '../pages/setting/insurances/optionsList';
 
 import ExtraError from '../pages/extra/extra-error';
+import Currency from '../pages/setting/currency';
 
 const AppRoute: RouteObject[] = [
   {
@@ -54,15 +57,40 @@ const AppRoute: RouteObject[] = [
         path: 'widgets',
         element: <Widgets />,
       },
+      {
+        path: 'insuranceData/*',
+        element: <Outlet />,
+        children: [
+          { path: 'companies', element: <Company/> },
+          { path: 'agent', element: <Agent /> },
+          { path: '2', element: '' },
+          { path: '3', element: '' },
+          { path: '4', element: '' },
+          { path: '5', element: '' },
+          { path: '*', element: '' },
+        ],
+      },
+      {
+        path: 'report/*',
+        element: <Outlet />,
+        children: [
+          { path: '1', element: '' },
+          { path: '2', element: '' },
+          { path: '3', element: '' },
+          { path: '4', element: '' },
+          { path: '5', element: '' },
+          { path: '*', element: '' },
+        ],
+      },
        {
         path: 'setting/*',
         element: <Outlet />,
         children: [
-          { path: 'companies', element: <Company/> },
           { path: 'ins_type', element: <INS_TYPE/> },
           { path: 'car_type', element: <CarType/> },
           { path: 'brand', element: <Brand /> },
           { path: 'option/:id', element: <OptionList/> },
+          { path: 'currency', element: <Currency/> },
           { path: '*', element: <ExtraError /> },
         ],
       },
