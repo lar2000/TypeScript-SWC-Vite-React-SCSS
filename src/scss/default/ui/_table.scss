@@ -33,11 +33,11 @@
 		& thead {
 			position: sticky;
 			top: 0;
-			background: #2CADE2;
+			background: #ffffff;
 			box-shadow: 0 0 0 1px var(--#{$prefix}component-table-border-color);
 			& > tr {
 				& > th {
-				color: #ffffff;
+				color: #000000;
 				}
 			}
 		}

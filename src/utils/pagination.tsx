@@ -32,7 +32,7 @@ const Pagination: React.FC<PaginationProps> = ({
       }
     } else {
       if (currentPage <= 3) {
-        pages.push(1, 2, 3, "...", totalPages);
+        pages.push(1, 2, 3, 4, "...", totalPages);
       } else if (currentPage >= totalPages - 2) {
         pages.push(1, "...", totalPages - 2, totalPages - 1, totalPages);
       } else {
@@ -51,9 +51,9 @@ const Pagination: React.FC<PaginationProps> = ({
   };
 
   return (
-    <div className="row mt-2 justify-content-between">
-      <div className="d-flex align-items-center">
-        <div className="d-lg-flex d-none text-center fw-medium mb-2"
+    <div className=" mt-2 d-flex justify-content-between">
+      {/* <div className="d-flex justify-content-between"> */}
+        <div className="d-flex text-center fw-medium mb-2"
           aria-live="polite" role="status"
         >
           ສະແດງ {start} - {end} ຈາກ {total} ລາຍການ:
@@ -111,7 +111,7 @@ const Pagination: React.FC<PaginationProps> = ({
           </ul>
         </div>
       </div>
-    </div>
+    // </div>
   );
 };
 

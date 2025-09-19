@@ -32,8 +32,8 @@ const Menu = [
     children: [
       { path: "/insuranceData/companies", title: "ບໍລິສັດປະກັນໄພ" },
       { path: "/insuranceData/agent", title: "ຕົວແທນຂາຍປະກັນ" },
-      { path: "/insuranceData/3", title: "ລາຍງານ3" },
-      { path: "/insuranceData/4", title: "ລາຍງານ4" },
+      { path: "/insuranceData/customer", title: "ຂໍ້ມູນຜູ້ຊື້ປະກັນ" },
+      { path: "/insuranceData/commisionget", title: "ຄ່າຄອມມິດຊັນ" },
     ],
   },
   {

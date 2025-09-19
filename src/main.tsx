@@ -8,9 +8,10 @@ import 'bootstrap/dist/js/bootstrap.bundle.min.js';
 import '@fortawesome/fontawesome-free/css/all.css';
 import 'react-perfect-scrollbar/dist/css/styles.css';
 import './index.css';
-import 'bootstrap';
 import './scss/react.scss';
 import 'bootstrap-social/bootstrap-social.css';
+import 'flag-icons/css/flag-icons.min.css';
+
 
 export function AppRouter(): React.ReactElement | null {
   const element = useRoutes(AppRoute as RouteObject[]);

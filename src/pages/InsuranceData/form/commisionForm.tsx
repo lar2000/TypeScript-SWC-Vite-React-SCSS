@@ -4,9 +4,9 @@ import type { FormInstance } from "rsuite";
 import { InputField } from '../../../utils/inputFields'
 import { createModel, requiredField } from '../../../utils/validate'
 
-interface AgentItem {
+interface CustomerItem {
   id?: number | string;
-  agent_code: string;
+  type: string;
   fullname: string;
   birthday: string;
   card_id: string;
@@ -14,43 +14,43 @@ interface AgentItem {
   district: string
   province: string
   village: string;
-  agent_status: string;
+  cust_status: string;
   contract: string
 }
 
-interface CarModalProps {
+interface CustomerProps {
   open: boolean;
   setOpen: () => void;
-  data?: AgentItem;
-  response: (data: AgentItem) => void
+  data?: CustomerItem;
+  response: (data: CustomerItem) => void
 }
 
-const C_Type_model = createModel<AgentItem>({
-  card_id: requiredField("⚠️ ກະລຸນາປ້ອນ...", 'number'),
+const C_Type_model = createModel<CustomerItem>({
+  card_id: requiredField("⚠️ ກະລຸນາປ້ອນ...", 'string'),
   fullname: requiredField("⚠️ ກະລຸນາປ້ອນ...", 'string'),
-  agent_code: requiredField("⚠️ ກະລຸນາປ້ອນ...", 'string'),
+  type: requiredField("⚠️ ກະລຸນາປ້ອນ...", 'string'),
   birthday: requiredField("⚠️ ກະລຸນາປ້ອນ...", 'string'),
-  tel: requiredField("⚠️ ກະລຸນາປ້ອນ...", 'string', { min: 10, max: 11 }),
+  tel: requiredField("⚠️ ກະລຸນາປ້ອນ...", 'string'),
   province: requiredField("⚠️ ກະລຸນາປ້ອນ...", 'string'),
   district: requiredField("⚠️ ກະລຸນາປ້ອນ...", 'string'),
   village: requiredField("⚠️ ກະລຸນາປ້ອນ...", 'string'),
-  agent_status: requiredField("⚠️ ກະລຸນາປ້ອນ...", 'string'),
+  cust_status: requiredField("⚠️ ກະລຸນາປ້ອນ...", 'string'),
   contract: requiredField("⚠️ ກະລຸນາປ້ອນ...", 'string'),
 });
 
-export default function ModalForm({ open, setOpen, data, response }: CarModalProps) {
+export default function ModalForm({ open, setOpen, data, response }: CustomerProps) {
 
     const [isLoading, setLoading] = useState(false);
-    const [inputs, setInputs] = useState<AgentItem>({
+    const [inputs, setInputs] = useState<CustomerItem>({
         card_id: "",
-        agent_code: '',
+        type: '',
         fullname: '',
         birthday: "",
         tel: "",
         province: "",
         district: "",
         village: "",
-        agent_status: "",
+        cust_status: "",
         contract: "",
       });
 
@@ -61,14 +61,14 @@ export default function ModalForm({ open, setOpen, data, response }: CarModalPro
           } else {
             setInputs({
                 card_id: "",
-                agent_code: '',
+                type: '',
                 fullname: '',
                 birthday: "",
                 tel: "",
                 province: "",
                 district: "",
                 village: "",
-                agent_status: "",
+                cust_status: "",
                 contract: "",
             })
           }
@@ -91,47 +91,43 @@ export default function ModalForm({ open, setOpen, data, response }: CarModalPro
   return (
     <Modal open={open} onClose={() => setOpen()} size="md">
       <Modal.Header>
-        <Modal.Title className="py-1">
-          {inputs.id ? "ແກ້ໄຂຂໍ້ມູນຕົວແທນ" : "ເພີ່ມຂໍ້ມູນຕົວແທນ"}
+        <Modal.Title className="py-1 text-center">
+          {inputs.id ? "ແກ້ໄຂຂໍ້ມູນລູກຄ້າ" : "ເພີ່ມຂໍ້ມູນລູກຄ້າ"}
         </Modal.Title>
       </Modal.Header>
       <Modal.Body>
         <Form fluid ref={formRef} model={C_Type_model} formValue={inputs}
-          onChange={(val) => setInputs(val as AgentItem)}
+          onChange={(val) => setInputs(val as CustomerItem)}
           onSubmit={handleSubmit}
         >
           <Form.Group>
             <div className="row px-0 mx-0">
                 <div className="col-sm-6 mb-3">
-                    <InputField name="card_id" label="ລະຫັດບັດ" accepter={Input} placeholder="0000000000"
+                    <InputField name="card_id" label="ລະຫັດບັດ" accepter={Input}
                     icon={<i className="fa fa-address-card"></i>} iconPosition="start"/>
                 </div>
                 <div className="col-sm-6 mb-3">
-                    <InputField name="fullname" label="ຊື່ ແລະ ນາມສະກຸນ" accepter={Input} placeholder="ປ້ອນຊື່..."
+                    <InputField name="fullname" label="ຊື່ ແລະ ນາມສະກຸນ" accepter={Input}
                     icon={<i className="fa fa-user"></i>} iconPosition="start"/>
                 </div>
                 <div className="col-sm-6 mb-3">
-                    <InputField name="tel" label="ເບີໂທລະສັບ" accepter={Input} placeholder="020/030 ..."
+                    <InputField name="tel" label="ເບີໂທລະສັບ" accepter={Input}
                     icon={<i className="fa fa-phone"></i>} iconPosition="start"/>
                 </div>
                  <div className="col-sm-6 mb-3">
-                    <InputField name="birthday" label="ວດປ ເກີດ" accepter={DatePicker} oneTap block
-                     placeholder="ເລຶອກວັນທີ..."/>
+                    <InputField name="birthday" label="ວດປ ເກີດ" accepter={DatePicker} oneTap block/>
                 </div>
                 <div className="col-sm-6 mb-3">
-                    <InputField name="province" label="ແຂວງ" accepter={SelectPicker} block
-                     placeholder="ເລຶອກແຂວງ..."/>
+                    <InputField name="province" label="ແຂວງ" accepter={SelectPicker} block/>
                 </div>
                 <div className="col-sm-6 mb-3">
-                    <InputField name="district" label="ເມືອງ" accepter={SelectPicker} block
-                     placeholder="ເລຶອກເມຶອງ..."/>
+                    <InputField name="district" label="ເມືອງ" accepter={SelectPicker} block/>
                 </div>
                 <div className="col-sm-6 mb-3">
-                    <InputField name="village" label="ບ້ານ" accepter={Input} placeholder="ປ້ອນຊື່ບ້ານ..."/>
+                    <InputField name="village" label="ບ້ານ" accepter={Input}/>
                 </div>
                 <div className="col-sm-6 mb-3">
-                    <InputField name="agent_status" label="ສະຖານະ" accepter={SelectPicker} block
-                     placeholder="ເລຶອກ..."/>
+                    <InputField name="cust_status" label="ສະຖານະ" accepter={SelectPicker} block/>
                 </div>
             </div>
           </Form.Group>

@@ -69,7 +69,7 @@ export default function ModalForm({ open, setOpen, data, response }: CarModalPro
   return (
     <Modal open={open} onClose={() => setOpen()} size="sm">
       <Modal.Header>
-        <Modal.Title className="py-1 text-center">
+        <Modal.Title className="py-1">
           {inputs.id ? "ແກ້ໄຂອັດຕາແລກປ່ຽນ" : "ເພີ່ມອັດຕາແລກປ່ຽນ"}
         </Modal.Title>
       </Modal.Header>
@@ -81,16 +81,19 @@ export default function ModalForm({ open, setOpen, data, response }: CarModalPro
           <Form.Group>
             <div className="row px-0 mx-0">
                 <div className="col-sm-12 mb-3">
-                    <InputField name="name" label="ຊື່ທາງການ" accepter={Input}/>
+                    <InputField name="name" label="ຊື່ທາງການ" accepter={Input} placeholder="ຊື່ສະກຸນເງິນ..."/>
                 </div>
                 <div className="col-sm-6 mb-3">
-                    <InputField name="currency_name_en" label="ສະກຸນເງິນ(ອັງກິດ)" accepter={Input}/>
+                    <InputField name="currency_name_en" label="ສະກຸນເງິນ(ອັງກິດ)" accepter={Input}
+                    placeholder="ສະກຸນເງິນ..."/>
                 </div>
                 <div className="col-sm-6 mb-3">
-                    <InputField name="currency_name_la" label="ສະກຸນເງິນ(ລາວ)" accepter={Input}/>
+                    <InputField name="currency_name_la" label="ສະກຸນເງິນ(ລາວ)" accepter={Input}
+                    placeholder="ສະກຸນເງິນ..."/>
                 </div>
                 <div className="col-sm-12 mb-3">
-                    <InputField name="rate_currency" label="ອັດຕາແລກປ່ຽນ" accepter={Input}/>
+                    <InputField name="rate_currency" label="ອັດຕາແລກປ່ຽນ" className="text-end" accepter={Input}
+                    placeholder="0.00"/>
                 </div>
             </div>
           </Form.Group>

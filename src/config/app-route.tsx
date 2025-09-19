@@ -16,6 +16,8 @@ import Widgets from '../pages/widget/widget';
 
 import Company from '../pages/InsuranceData/ins-companies';
 import Agent from '../pages/InsuranceData/agent';
+import Customers from '../pages/InsuranceData/customers';
+import Commisions from '../pages/InsuranceData/commisionget';
 
 import CarType from '../pages/setting/car/car-type';
 import Brand from '../pages/setting/car/brand';
@@ -63,8 +65,8 @@ const AppRoute: RouteObject[] = [
         children: [
           { path: 'companies', element: <Company/> },
           { path: 'agent', element: <Agent /> },
-          { path: '2', element: '' },
-          { path: '3', element: '' },
+          { path: 'customer', element: <Customers /> },
+          { path: 'commisionget', element: <Commisions/> },
           { path: '4', element: '' },
           { path: '5', element: '' },
           { path: '*', element: '' },

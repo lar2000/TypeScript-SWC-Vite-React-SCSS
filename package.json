@@ -13,6 +13,7 @@
     "@fortawesome/fontawesome-free": "^7.0.1",
     "bootstrap": "^5.3.8",
     "bootstrap-social": "^5.1.1",
+    "flag-icons": "^7.5.0",
     "react": "^19.1.1",
     "react-apexcharts": "^1.7.0",
     "react-dom": "^19.1.1",

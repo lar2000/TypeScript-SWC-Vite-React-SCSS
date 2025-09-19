@@ -93,7 +93,7 @@ export default function ModalForm({ open, setOpen, data, response }: CompProp) {
   return (
     <Modal open={open} onClose={() => setOpen()} size="md">
       <Modal.Header>
-        <Modal.Title className="py-1 text-center">
+        <Modal.Title className="py-1">
           {data?.id ? "ແກ້ໄຂບໍລິສັດປະກັນໄພ" : "ເພີ່ມບໍລິສັດປະກັນໄພ"}
         </Modal.Title>
       </Modal.Header>

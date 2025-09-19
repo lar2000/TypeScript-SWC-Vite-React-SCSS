@@ -1,5 +1,5 @@
 import React, { useEffect, useContext, useState } from "react";
-import { useParams, Link, useNavigate } from "react-router-dom";
+import { useParams, Link } from "react-router-dom";
 import { AppSettings } from "../../../config/app-settings";
 import Pagination from "../../../utils/pagination";
 import FormModal from "./ins-Form/optionForm";
@@ -16,7 +16,6 @@ interface OptionItems {
 // ----------------- Component -----------------
 function OptionList(): React.ReactElement {
   const context = useContext(AppSettings);
-  const navigate = useNavigate();
   const { id } = useParams<{ id: string }>();
   const ids: string | number = isNaN(Number(id!)) ? id! : Number(id!);
 
@@ -45,8 +44,7 @@ function OptionList(): React.ReactElement {
       context?.handleSetAppContentFullHeight(false);
       context?.handleSetAppContentClass("");
     };
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  }, [context]);
 
   // Mock data
   const mockData: OptionItems[] = Array.from({ length: 5 }, (_, idx) => {
@@ -74,6 +72,7 @@ function OptionList(): React.ReactElement {
     setOpen(true);
     console.log(item);
   };
+
   const handleDelete = (id: number | string | undefined): void => {
     console.log(id);
   };
@@ -102,6 +101,14 @@ function OptionList(): React.ReactElement {
     return () => clearTimeout(timer);
   }, [response]);
 
+  const columns = [
+    {class: 'text-center', col:'ລຳດັບ'}, 
+    {class: '', col:'ທາງເລຶອກ(ລາວ)'}, 
+    {class: '', col:'ທາງເລຶອກ(ອັງກິດ)'}, 
+    {class: 'text-end', col:'ຫັກອາກອນ'}, 
+    {class: 'text-center w-100px', col:'ຈັດການ'}
+  ]
+
   return (
     <div className="h-100 py-0 my-0">
       <ol className="breadcrumb float-sm-end mt-lg-2 me-lg-4">
@@ -121,9 +128,19 @@ function OptionList(): React.ReactElement {
       <h1 className="page-header pt-lg-3 mb-0">ລາຍການທາງເລຶອກ</h1>
       <div className="row w-100">
         <div className="col-lg-8 col-sm-4 d-sm-flex d-none align-items-center">
-          <button onClick={() => navigate(-1)} className="btn btn-danger btn-icon btn-md">
-            <i className="fa fa-arrow-left"></i>
-          </button>
+          <div className="d-lg-flex d-none align-items-center text-nowrap">
+            <select value={length}
+            className="form-select form-select-lg h-30px py-0 pe-30px"
+              onChange={(e) => {
+              setLength(Number(e.target.value));
+              setCurrentPage(1);
+              }}
+              >
+                <option value={30}>30</option>
+                <option value={50}>50</option>
+                <option value={100}>100</option>
+            </select>
+          </div>
         </div>
         <div className="col-lg-4 col-sm-8 mb-2">
           <InputGroup className="border">
@@ -137,24 +154,23 @@ function OptionList(): React.ReactElement {
           </InputGroup>
         </div>
       </div>
-      <div className="panel shadow-lg rounded-2">
+      <div className="panel rounded-2">
         <div className="table-responsive mx-1 mt-2" id="table">
           <table
             className="table table-thead-sticky table-tfoot-sticky table-bordered mb-0
-             align-middle table-px-10px table-py-6px table-hover table-sm table-striped text-nowrap fs-5"
+             align-middle table-px-10px table-py-6px table-hover table-sm text-nowrap fs-5"
           >
             <thead>
-              <tr className=" fw-normal">
-                <th className="text-center w-10px">ລຳດັບ</th>
-                <th>ທາງເລຶອກ(ລາວ)</th>
-                <th>ທາງເລຶອກ(ອັງກິດ)</th>
-                <th>ຫັກອາກອນ</th>
-                <th className="text-center w-100px">ຈັດການ</th>
+              <tr>
+                {columns.map((col, idx) => (
+                  <th key={idx} className={col.class}>{col.col}</th>
+                ))}
               </tr>
             </thead>
             {isLoading ? (
               <tr>
-                <td colSpan={4}> <Placeholder.Grid active rows={15} columns={3} className="my-4"
+                <td colSpan={columns.length}> 
+                  <Placeholder.Grid active rows={6} columns={6} className="my-4"
                   />
                   <Loader center size="lg" content="loading" />
                 </td>
@@ -162,12 +178,12 @@ function OptionList(): React.ReactElement {
             ) : (
               <>
                 <tbody>
-                  {currentData.map((item, index) => (
-                    <tr key={item.id} className=" fw-bold">
-                      <td className="text-end">{index + 1}</td>
+                  {currentData.length > 0 ? currentData.map((item, index) => (
+                    <tr key={item.id}>
+                      <td className="text-center">{index + 1}</td>
                       <td>{item.option_name_la}</td>
                       <td>{item.option_name_en}</td>
-                      <td>{item.option_tax}</td>
+                      <td className="text-end">{item.option_tax}</td>
                       <td className="text-center">
                         <button className="btn btn-cyan btn-xs px-1 me-1"
                           onClick={() => handleEdit(item)}
@@ -181,36 +197,26 @@ function OptionList(): React.ReactElement {
                         </button>
                       </td>
                     </tr>
-                  ))}
+                  )):(
+                    <tr>
+                      <td colSpan={columns.length} className="text-center text-red">
+                        =================== ບໍ່ມີຂໍ້ມູນທາງເລຶອກ ======================
+                      </td>
+                    </tr>
+                  )}
                 </tbody>
                 <tfoot>
                   <tr>
-                    <td colSpan={5}>
-                      <div className="d-lg-flex align-items-center my-n2 mx-2">
-                        <div className="d-lg-flex d-none align-items-center text-nowrap">
-                          <select value={length}
-                            className="form-select form-select-lg h-30px py-0 pe-30px"
-                            onChange={(e) => {
-                              setLength(Number(e.target.value));
-                              setCurrentPage(1);
-                            }}
-                          >
-                            <option value={30}>30</option>
-                            <option value={50}>50</option>
-                            <option value={100}>100</option>
-                          </select>
-                        </div>
-                        <div className="d-lg-block d-none ms-2 text-body text-opacity-50">
-                          {mockData.length} results found
-                        </div>
-                        <ul className="pagination pagination-sm mb-0 ms-auto justify-content-center">
+                    <td colSpan={columns.length}>
+                      <div className="my-n2 mx-2">
+                        {/* <ul className="pagination pagination-sm mb-0 ms-auto justify-content-center"> */}
                           <Pagination
-                            total={currentData.length}
+                            total={filteredData.length}
                             length={length}
                             currentPage={currentPage}
                             setCurrentPage={setCurrentPage}
                           />
-                        </ul>
+                        {/* </ul> */}
                       </div>
                     </td>
                   </tr>
@@ -222,7 +228,6 @@ function OptionList(): React.ReactElement {
       </div>
 
       {/* ---------------- Modal ---------------- */}
-      {open && (
         <FormModal
           open={open}
           setOpen={() => setOpen(false)}
@@ -230,7 +235,6 @@ function OptionList(): React.ReactElement {
           response={setResponse}
           id={ids}
         />
-      )}
     </div>
   );
 }

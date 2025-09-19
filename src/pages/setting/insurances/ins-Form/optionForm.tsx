@@ -73,7 +73,7 @@ export default function ModalForm({ open, setOpen, data, response, id }: CarModa
   return (
     <Modal open={open} onClose={setOpen} size="xs">
       <Modal.Header>
-        <Modal.Title className="py-1 text-center">
+        <Modal.Title className="py-1">
           {data?.id ? "ແກ້ໄຂທາງເລຶອກ" : "ເພີ່ມທາງເລຶອກ"}
         </Modal.Title>
       </Modal.Header>
@@ -81,8 +81,8 @@ export default function ModalForm({ open, setOpen, data, response, id }: CarModa
         <Form fluid ref={formRef} model={C_Type_model} formValue={inputs}
         onSubmit={handleSubmit} onChange={(val) => setInputs(val as OptionItems)} >
           <Form.Group className="mb-3">
-            <InputField name="option_name_la" label="ທາງເລຶອກ(ລາວ)" accepter={Input} />
-            <InputField name="option_name_en" label="ທາງເລຶອກ(ອັງກິດ)" accepter={Input} />
+            <InputField name="option_name_la" label="ທາງເລຶອກ(ລາວ)" accepter={Input} placeholder="ປ້ອນຊື່(ລາວ)"/>
+            <InputField name="option_name_en" label="ທາງເລຶອກ(ອັງກິດ)" accepter={Input} placeholder="ປ້ອນຊື່(ອັງກິດ)" />
             <InputField name="option_tax" label="ອາກອນ" accepter={SelectPicker}
              data={status} block placeholder="ເລຶອກ"/>
           </Form.Group>

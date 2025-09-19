@@ -229,7 +229,7 @@ function Sidebar(): React.ReactElement {
 
         return (
           <>
-            <div id="sidebar" className={ 'app-sidebar shadow-lg' +
+            <div id="sidebar" className={ 'app-sidebar border-end' +
                 (appSidebarTransparent ? 'app-sidebar-transparent ' : '')
               }
               data-bs-theme={appSidebarLight ? '' : 'light'}

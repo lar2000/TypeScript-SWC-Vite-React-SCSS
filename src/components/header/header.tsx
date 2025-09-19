@@ -28,7 +28,7 @@ function Header(): React.ReactElement {
   } = ctx;
 
   return (
-    <div id="header" className="app-header shadow" style={{ background: '#2CADE2'}}
+    <div id="header" className="app-header" style={{ background: '#2CADE2'}}
     >
       <div className="navbar-header">
         <Link to="/" className="navbar-brand text-white">

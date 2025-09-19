@@ -60,7 +60,7 @@ export default function ModalForm({ open, setOpen, data, response }: CarModalPro
   return (
     <Modal open={open} onClose={() => setOpen()} size="xs">
       <Modal.Header>
-        <Modal.Title className="py-1 text-center">
+        <Modal.Title className="py-1">
           {inputs.id ? "ແກ້ໄຂປະເພດລົດ" : "ເພີ່ມປະເພດລົດ"}
         </Modal.Title>
       </Modal.Header>
@@ -70,8 +70,10 @@ export default function ModalForm({ open, setOpen, data, response }: CarModalPro
           onSubmit={handleSubmit}
         >
           <Form.Group>
-            <InputField name="car_type_name_la" label="ປະເພດລົດ(ລາວ)" accepter={Input} />
-            <InputField name="car_type_name_en" label="ປະເພດລົດ(ອັງກິດ)" accepter={Input} />
+            <InputField name="car_type_name_la" label="ປະເພດລົດ(ລາວ)" accepter={Input} 
+            placeholder="ປ້ອນ..."/>
+            <InputField name="car_type_name_en" label="ປະເພດລົດ(ອັງກິດ)" accepter={Input} 
+            placeholder="ປ້ອນ..."/>
           </Form.Group>
         </Form>
       </Modal.Body>

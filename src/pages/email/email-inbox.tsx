@@ -29,7 +29,7 @@ function EmailInbox(): React.ReactElement {
   }
 
   return (
-    <div className="mailbox">
+    <div className="mailbox m-3 mx-n4">
       {/* Sidebar */}
       <div className="mailbox-sidebar">
         <div className="mailbox-sidebar-header d-flex justify-content-center">
