@@ -38,7 +38,7 @@ const C_Type_model = createModel<CustomerItem>({
   contract: requiredField("⚠️ ກະລຸນາປ້ອນ...", 'string'),
 });
 
-export default function ModalForm({ open, setOpen, data, response }: CustomerProps) {
+export default function ModalFormEdit({ open, setOpen, data, response }: CustomerProps) {
 
     const [isLoading, setLoading] = useState(false);
     const [inputs, setInputs] = useState<CustomerItem>({

@@ -5,7 +5,7 @@ import { Link } from 'react-router-dom';
 import DropdownNotification from './dropdown/notification';
 import DropdownLanguage from './dropdown/language';
 import DropdownProfile from './dropdown/profile';
-import SearchForm from './search/form';
+// import SearchForm from './search/form';
 import DropdownMegaMenu from './dropdown/mega';
 
 import logo from '../../../public/assets/img/profile.jpg';
@@ -82,7 +82,7 @@ function Header(): React.ReactElement {
       {appHeaderMegaMenu && <DropdownMegaMenu />}
 
       <div className="navbar-nav">
-        <SearchForm />
+        {/* <SearchForm /> */}
         <DropdownNotification/>
 
         {appHeaderLanguageBar && <DropdownLanguage />}
